@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class Battle : MonoBehaviour {
 
-	// Use this for initialization
 	void Start () {
 		DontDestroyOnLoad (this.gameObject);
 		SceneManager.sceneLoaded += OnSceneLoaded;
