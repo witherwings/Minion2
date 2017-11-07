@@ -64,14 +64,16 @@ public class TurnBattle : MonoBehaviour {
 				if (currentUnit.tag == "PlayerUnit") {
 					Debug.Log ("player");
 					this.party.GetComponent<SelectUnit> ().selectCurrentUnit (currentUnit.gameObject);
+
 					tmpcount++;
 				} else {
 					Debug.Log ("enemy");
 					currentUnit.GetComponent<EnemyUnitAction> ().act ();
+			
 					tmpcount++;
 					this.nextTurn ();
 				}
-			} //else {this.nextTurn();}
+			} else {this.nextTurn();}
 
 
 		}
