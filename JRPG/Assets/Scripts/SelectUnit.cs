@@ -37,6 +37,8 @@ public class SelectUnit : MonoBehaviour {
 		//this.enemyUnitsMenu.SetActive (false);
 
 		this.currentUnit.GetComponent<PlayerUnitAction>().act (target);
+		GameObject manager = GameObject.Find ("GameManager") as GameObject;
+		manager.GetComponent<TurnBattle> ().nextTurn ();
 	}
 }
 

@@ -27,7 +27,7 @@ public class CreateEnemyUnitMenu : MonoBehaviour {
 	public void selectEnemyTarget() {
 		Debug.Log ("clic bat"); //Para testeos
 		GameObject party = GameObject.Find ("Party");
-		//party.GetComponent<SelectUnit> ().attackEnemyTarget (this.gameObject);
+		party.GetComponent<SelectUnit> ().attackEnemyTarget (this.gameObject);
 	}
 
 }
