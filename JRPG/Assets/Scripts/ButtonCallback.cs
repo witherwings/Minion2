@@ -13,7 +13,7 @@ public class ButtonCallback : MonoBehaviour {
 
 	private void addCallback() {
 		Debug.Log ("clic att"); //Para testeos
-		GameObject playerParty = GameObject.Find ("Party");s
+		GameObject playerParty = GameObject.Find ("Party");
 		playerParty.GetComponent<SelectUnit> ().selectAttack (this.physical);
 	}
 
