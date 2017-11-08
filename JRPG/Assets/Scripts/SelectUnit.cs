@@ -21,7 +21,7 @@ public class SelectUnit : MonoBehaviour {
 		this.currentUnit = unit;
 		Debug.Log ("set");
 		Debug.Log (currentUnit.name);
-		//this.actionsMenu.SetActive (true);
+		this.actionsMenu.SetActive (true);
 		this.currentUnit.GetComponent<PlayerUnitAction> ().updateHUD ();
 	}
 
@@ -32,13 +32,18 @@ public class SelectUnit : MonoBehaviour {
 		//this.enemyUnitsMenu.SetActive (true);
 	}
 
+	public void selectSpecial(){
+		this.currentUnit.GetComponent<PlayerUnitAction> ().selectSpecial();
+	}
+
 	public void attackEnemyTarget(GameObject target) {
 		//this.actionsMenu.SetActive (false);
 		//this.enemyUnitsMenu.SetActive (false);
 
 		this.currentUnit.GetComponent<PlayerUnitAction>().act (target);
+		this.actionsMenu.SetActive (false);
 		GameObject manager = GameObject.Find ("GameManager") as GameObject;
-		manager.GetComponent<TurnBattle> ().nextTurn ();
+		StartCoroutine (manager.GetComponent<TurnBattle> ().PrepareNextTurn ());
 	}
 }
 

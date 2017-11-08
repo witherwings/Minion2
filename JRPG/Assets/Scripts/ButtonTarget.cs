@@ -7,8 +7,13 @@ public class ButtonTarget : MonoBehaviour {
 	
 	public GameObject targetEnemyUnitPrefab;
 
+	void Update(){
+		if (targetEnemyUnitPrefab.CompareTag ("DeadUnit")) {
+			Destroy (this.gameObject);
+		}
+	}
+
 	public void selectEnemyTarget() {
-		Debug.Log ("clic bat"); //Para testeos
 		GameObject party = GameObject.Find ("Party");
 		party.GetComponent<SelectUnit> ().attackEnemyTarget (this.targetEnemyUnitPrefab);
 	}

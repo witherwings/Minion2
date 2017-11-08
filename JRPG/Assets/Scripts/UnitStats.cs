@@ -37,8 +37,24 @@ public class UnitStats : MonoBehaviour, IComparable {
 		this.health -= roundD;
 		animator.Play ("Hit");
 
-		GameObject damageText = Instantiate (this.damageTextPrefab) as GameObject;
+		GameObject HUDCanvas = GameObject.Find ("HUD");
+		GameObject damageText = Instantiate (this.damageTextPrefab, HUDCanvas.transform) as GameObject;
+		damageText.GetComponent<Text> ().color = Color.green;
 		damageText.GetComponent<Text> ().text = "" + roundD;
+
+		if (roundD >= 75) {
+			damageText.GetComponent<Text> ().color = Color.red;
+		}
+
+		if (roundD >= 50 && roundD < 75) {
+			damageText.GetComponent<Text> ().color = Color.blue;
+		}
+
+		if (roundD == 0) {
+			damageText.GetComponent<Text> ().color = Color.grey;
+			damageText.GetComponent<Text> ().text = "Miss";
+		} 
+
 		damageText.transform.position = this.damageTextPosition;
 		//damageText.transform.localScale = new Vector2 (1.0f, 1.0f);
 
@@ -48,5 +64,11 @@ public class UnitStats : MonoBehaviour, IComparable {
 			Destroy (this.gameObject);
 		}
 
+		StartCoroutine (DestroyDamageText (damageText));
+	}
+
+	IEnumerator DestroyDamageText (GameObject dmg){
+		yield return new WaitForSeconds (1.5f);
+		Destroy (dmg);
 	}
 }

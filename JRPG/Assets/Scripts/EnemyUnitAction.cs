@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class EnemyUnitAction : MonoBehaviour {
 
-	public GameObject attack;
+	public GameObject[] attacks;
 	public string targetsTag;
 
 	void Awake () {
-		this.attack = Instantiate (this.attack);
-		this.attack.GetComponent<AttackTarget> ().ownerUnit = this.gameObject;
+		foreach (var attack in attacks) {
+			Instantiate (attack);
+			attack.GetComponent<AttackTarget> ().ownerUnit = this.gameObject;
+		}
 	}
 
 	GameObject findRandomTarget() {
@@ -27,6 +29,8 @@ public class EnemyUnitAction : MonoBehaviour {
 
 	public void act() {
 		GameObject target = findRandomTarget ();
-		this.attack.GetComponent<AttackTarget> ().hit (target);
+		int attackType = Random.Range (0, attacks.Length);
+		this.attacks [attackType].GetComponent<AttackTarget> ().ownerUnit = this.gameObject;
+		this.attacks[attackType].GetComponent<AttackTarget> ().hit (target);
 	}
 }

@@ -54,7 +54,7 @@ MonoBehaviour:
   ownerUnit: {fileID: 0}
   attackAnimation: MagicalAttack
   magicAttack: 1
-  manaCost: 10
+  manaCost: 30
   minAttackMultipplier: 0.4
   maxAttackMultipplier: 1.2
   minDefenseMultipplier: 0.2

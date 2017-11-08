@@ -41,7 +41,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
-  maxValue: 100
+  bar: {fileID: 114795699804266866}
 --- !u!114 &114795699804266866
 MonoBehaviour:
   m_ObjectHideFlags: 1

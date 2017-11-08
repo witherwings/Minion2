@@ -10,12 +10,13 @@ public class TurnBattle : MonoBehaviour {
 	public GameObject loseImage;
 	private int tmpcount;
 
-	public GameObject party;
+	private GameObject party;
 	public GameObject actionsMenu;
 	public GameObject enemyUnitsMenu;
 
 	void Start() {
 		tmpcount = 0;
+		party = GameObject.Find ("Party");
 		unitsStats = new List<UnitStats> ();
 		GameObject[] playerUnits = GameObject.FindGameObjectsWithTag("PlayerUnit");
 		foreach (GameObject playerUnit in playerUnits) {
@@ -39,18 +40,7 @@ public class TurnBattle : MonoBehaviour {
 	}
 
 	public void nextTurn() {
-		if (tmpcount < 10) {
-			Debug.Log (tmpcount);
-			GameObject[] remainingEnemyUnits = GameObject.FindGameObjectsWithTag ("EnemyUnit");
-			if (remainingEnemyUnits.Length == 0) {
-				winImage.SetActive (true);
-			}
-
-			GameObject[] remainingPlayerUnits = GameObject.FindGameObjectsWithTag ("PlayerUnit");
-			if (remainingPlayerUnits.Length == 0) {
-				loseImage.SetActive (true);
-			}
-
+		if (tmpcount < 1000) {
 			UnitStats currentUnitStats = unitsStats [0];
 			unitsStats.Remove (currentUnitStats);
 
@@ -59,23 +49,40 @@ public class TurnBattle : MonoBehaviour {
 
 				currentUnitStats.calculateNextActTurn (currentUnitStats.nextActTurn);
 				unitsStats.Add (currentUnitStats);
-				unitsStats.Sort ();
+				//unitsStats.Sort ();
 
 				if (currentUnit.tag == "PlayerUnit") {
 					Debug.Log ("player");
 					this.party.GetComponent<SelectUnit> ().selectCurrentUnit (currentUnit.gameObject);
-
 					tmpcount++;
 				} else {
 					Debug.Log ("enemy");
 					currentUnit.GetComponent<EnemyUnitAction> ().act ();
-			
+					StartCoroutine (PrepareNextTurn());
 					tmpcount++;
-					this.nextTurn ();
 				}
-			} else {this.nextTurn();}
+			} else {
+				unitsStats.Remove (currentUnitStats);
+				StartCoroutine (PrepareNextTurn ());
+			}
 
 
 		}
+	}
+
+	public IEnumerator PrepareNextTurn(){
+		GameObject[] remainingEnemyUnits = GameObject.FindGameObjectsWithTag ("EnemyUnit");
+		if (remainingEnemyUnits.Length == 0) {
+			winImage.SetActive (true);
+		}
+
+		GameObject[] remainingPlayerUnits = GameObject.FindGameObjectsWithTag ("PlayerUnit");
+		if (remainingPlayerUnits.Length == 0) {
+			loseImage.SetActive (true);
+		}
+
+		yield return new WaitForSeconds (1.5f);
+
+		this.nextTurn ();
 	}
 }
